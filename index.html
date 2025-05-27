@@ -1,0 +1,143 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+<script>
+/* global nn, p5 */
+  
+  let cookie = (p) => {
+    let url = 'https://cataas.com/cat'
+    let cat_img
+    let imageReady = false
+    let imageDisplayed = false
+    
+    async function fortune () {
+      return url + '?timestamp=' + Date.now()
+    }
+    
+    p.setup = () => {
+      p.loadImage(url, img => {
+        cat_img = img
+        imageReady = true
+      })
+      
+      p.createCanvas(nn.width, nn.height)
+      p.background(195, 177, 225)
+      p.rectMode(p.CENTER)
+      p.textSize(32)
+      p.text('FORTUNE KITTY', nn.width / 2, 0)
+      p.angleMode(p.DEGREES)
+      p.stroke(255, 192, 0)
+      p.strokeWeight(0)
+      p.fill(255, 215, 0)
+      
+      p.push()
+      p.beginShape()
+      p.vertex(nn.width / 2 - 250, nn.height / 2 - 250)
+      p.bezierVertex(nn.width / 2 - 325, nn.height / 2 - 250, nn.width / 2 - 325, nn.height / 2 + 210, nn.width / 2, nn.height / 2 + 210)
+      p.vertex(nn.width / 2 - 250, nn.height / 2 - 250)
+      p.bezierVertex(nn.width / 2 + 50, nn.height / 2 - 105, nn.width / 2, nn.height / 2 + 10, nn.width / 2, nn.height / 2 + 210)
+      p.endShape()
+      p.pop()
+          
+      p.beginShape()
+      p.vertex(nn.width / 2 + 250, nn.height / 2 - 250)
+      p.bezierVertex(nn.width / 2 + 325, nn.height / 2 - 250, nn.width / 2 + 325, nn.height / 2 + 210, nn.width / 2, nn.height / 2 + 210)
+      p.vertex(nn.width / 2 + 250, nn.height / 2 - 250)
+      p.bezierVertex(nn.width / 2 - 50, nn.height / 2 - 105, nn.width / 2, nn.height / 2 + 10, nn.width / 2, nn.height / 2 + 210)
+      p.endShape()
+      
+      p.push()
+      p.noFill()
+      p.stroke(255, 192, 0, 200)
+      p.strokeWeight(20)
+      p.bezier(nn.width / 2 - 250, nn.height / 2 - 250, nn.width / 2 - 325, nn.height / 2 - 250, nn.width / 2 - 325, nn.height / 2 + 210, nn.width / 2, nn.height / 2 + 210)  
+      p.bezier(nn.width / 2 + 250, nn.height / 2 - 250, nn.width / 2 + 325, nn.height / 2 - 250, nn.width / 2 + 325, nn.height / 2 + 210, nn.width / 2, nn.height / 2 + 210)
+      p.stroke(255, 255, 197, 50)
+      p.strokeWeight(7)
+      p.bezier(nn.width / 2 - 250, nn.height / 2 - 250, nn.width / 2 + 50, nn.height / 2 - 105, nn.width / 2, nn.height / 2 + 75, nn.width / 2, nn.height / 2 + 15)
+      p.bezier(nn.width / 2 + 250, nn.height / 2 - 250, nn.width / 2 - 50, nn.height / 2 - 105, nn.width / 2, nn.height / 2 + 75, nn.width / 2, nn.height / 2 + 15)
+      p.pop()
+    }
+    
+    let opencookie = false
+    let angle = 0
+    
+    p.draw = () => {
+      if (opencookie && angle < 25) {
+        p.clear()
+        p.background(195, 177, 225)
+        p.background(195, 177, 225)
+
+        p.fill(255, 215, 0)
+        p.stroke(255, 215, 0)
+        p.strokeWeight(1)
+
+        if (imageReady && !imageDisplayed) {
+          cat_img.resize(nn.width / 4, 0)
+          p.image(cat_img, nn.width / 2 - cat_img.width / 2, nn.height / 2 - cat_img.height / 2)
+        }
+        
+        p.push()
+        p.translate(nn.width / 2, nn.height / 2 + 210)
+        p.rotate(-1 * angle)
+        p.beginShape()
+        p.vertex(-250, -460)
+        p.bezierVertex(-325, -460, -325, 0, 0, 0)
+        p.vertex(-250, -460)
+        p.bezierVertex(50, -315, 0, -200, 0, 0)
+        p.endShape()
+        p.pop()
+
+        p.push()
+        p.translate(nn.width / 2, nn.height / 2 + 210)
+        p.rotate(angle)
+        p.beginShape()
+        p.vertex(250, -460)
+        p.bezierVertex(325, -460, 325, 0, 0, 0)
+        p.vertex(250, -460)
+        p.bezierVertex(-50, -315, 0, -200, 0, 0)
+        p.endShape()
+        p.pop()
+        
+        p.push()
+        p.translate(nn.width / 2, nn.height / 2 + 210)
+        p.rotate(-1 * angle)
+        p.noFill()
+        p.stroke(255, 192, 0, 200)
+        p.strokeWeight(20)
+        p.bezier(-250, -460, -325, -460, -325, 0, 0, 0)
+        p.stroke(255, 255, 197, 50)
+        p.strokeWeight(7)
+        p.bezier(-250, -460, 50, -315, 0, -200, 0, 0)
+        p.pop()
+        
+        p.push()
+        p.translate(nn.width / 2, nn.height / 2 + 210)
+        p.rotate(angle)
+        p.noFill()
+        p.stroke(255, 192, 0, 200)
+        p.strokeWeight(20)
+        p.bezier(250, -460, 325, -460, 325, 0, 0, 0)
+        p.stroke(255, 255, 197, 50)
+        p.strokeWeight(7)
+        p.bezier(250, -460, -50, -315, 0, -200, 0, 0)
+        p.pop()
+        
+        angle = angle + 0.8
+      }
+      if (angle > 25 && imageReady && !imageDisplayed) {
+        opencookie = false
+        cat_img.resize(nn.width / 4, 0)
+        p.image(cat_img, nn.width / 2 - cat_img.width / 2, nn.height / 2 - cat_img.height / 2)
+        imageDisplayed = true
+      }
+    }
+    
+    
+    nn.on('click', () => {
+      opencookie = true
+    })
+  }
+  
+  new p5(cookie)
+
+</script>
