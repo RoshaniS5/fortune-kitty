@@ -8,10 +8,7 @@
     let cat_img
     let imageReady = false
     let imageDisplayed = false
-    
-    async function fortune () {
-      return url + '?timestamp=' + Date.now()
-    }
+    let crackcookie
     
     p.setup = () => {
       p.loadImage(url, img => {
@@ -19,12 +16,20 @@
         imageReady = true
       })
       
+      crackcookie = nn.create('audio')
+        .set('src', 'Fortunecookie_trimmed.mp3')
+        .addTo('body')
+      
       p.createCanvas(nn.width, nn.height)
       p.background(195, 177, 225)
+      p.fill(48, 25, 52)
       p.rectMode(p.CENTER)
       p.textSize(32)
+      p.textFont('Verdana')
       p.textAlign(p.CENTER, p.CENTER)
       p.text('FORTUNE KITTY', nn.width / 2, 40)
+      p.textSize(14)
+      p.text('Click to crack the fortune cookie open!', nn.width / 2, 60)
       p.angleMode(p.DEGREES)
       p.stroke(255, 192, 0)
       p.strokeWeight(0)
@@ -66,11 +71,16 @@
       if (opencookie && angle < 25) {
         p.clear()
         p.background(195, 177, 225)
-        p.background(195, 177, 225)
+        p.fill(48, 25, 52)
+        p.rectMode(p.CENTER)
+        p.textSize(32)
+        p.textFont('Verdana')
+        p.textAlign(p.CENTER, p.CENTER)
+        p.text('FORTUNE KITTY', nn.width / 2, 40)
 
         p.fill(255, 215, 0)
         p.stroke(255, 215, 0)
-        p.strokeWeight(1)
+        p.strokeWeight(0)
 
         if (imageReady && !imageDisplayed) {
           cat_img.resize(nn.width / 4, 0)
@@ -136,6 +146,7 @@
     
     nn.on('click', () => {
       opencookie = true
+      crackcookie.play()
     })
   }
   
