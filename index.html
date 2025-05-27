@@ -83,7 +83,12 @@
         p.strokeWeight(0)
 
         if (imageReady && !imageDisplayed) {
-          cat_img.resize(nn.width / 4, 0)
+          if (cat_img.width >= cat_img.height) {
+            cat_img.resize(nn.width / 4, 0)
+          }
+          else {
+            cat_img.resize(0, nn.height / 4)
+          }  
           p.image(cat_img, nn.width / 2 - cat_img.width / 2, nn.height / 2 - cat_img.height / 2)
         }
         
@@ -137,7 +142,12 @@
       }
       if (angle > 25 && imageReady && !imageDisplayed) {
         opencookie = false
-        cat_img.resize(nn.width / 4, 0)
+        if (cat_img.width >= cat_img.height) {
+          cat_img.resize(nn.width / 4, 0)
+        }
+        else {
+          cat_img.resize(0, nn.height / 4)
+        }
         p.image(cat_img, nn.width / 2 - cat_img.width / 2, nn.height / 2 - cat_img.height / 2)
         imageDisplayed = true
       }
@@ -145,8 +155,16 @@
     
     
     nn.on('click', () => {
-      opencookie = true
-      crackcookie.play()
+      if (!opencookie) {
+        opencookie = true
+        crackcookie.play()
+      }
+      else {
+        opencookie = false 
+        angle = 0
+        p.setup()
+        p.draw()
+      }
     })
   }
   
